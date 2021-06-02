@@ -8,7 +8,7 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.hillel.lesson2.utils;
+package com.hillel.car.shop.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
