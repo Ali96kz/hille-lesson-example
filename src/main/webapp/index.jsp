@@ -6,6 +6,6 @@
     <title>Flower Shop</title>
 </head>
 <body>
-<c:redirect url="/car-shop"/>
+<c:redirect url="/car-shop/login"/>
 </body>
 </html>
