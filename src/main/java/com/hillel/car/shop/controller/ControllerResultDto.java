@@ -1,9 +1,9 @@
-package com.hillel.car.shop;
+package com.hillel.car.shop.controller;
 
-public class ControllerResult {
+public class ControllerResultDto {
     private final String view;
 
-    public ControllerResult(String view) {
+    public ControllerResultDto(String view) {
         this.view = view;
     }
 

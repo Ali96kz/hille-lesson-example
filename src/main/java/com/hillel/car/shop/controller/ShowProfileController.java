@@ -3,16 +3,10 @@ package com.hillel.car.shop.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShowPageController implements Controller {
-
-    private final String VIEW_NANE;
-
-    public ShowPageController(String VIEW_NANE) {
-        this.VIEW_NANE = VIEW_NANE;
-    }
+public class ShowProfileController implements Controller{
 
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
-        return new ControllerResultDto(VIEW_NANE);
+        return null;
     }
 }
