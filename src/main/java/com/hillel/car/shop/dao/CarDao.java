@@ -14,14 +14,18 @@ import com.hillel.car.shop.utils.PostgresUtils;
 
 public class CarDao {
     private BrandDAO brandDAO = new BrandDAO();
-    private static final String CAR_FIELD = "price, colour, createdDate, brandId";
-    private static final String SELECT_ALL = "select " + CAR_FIELD + " from car";
-    private static final String SELECT_BY_ID = "select * from car where id = ?";
-    private static final String INSERT_SQL = "INSERT INTO car(" + CAR_FIELD + ") VALUES(?, ?, ?, ?)";
+    private static final String SELECT_ALL = "select price, colour, createdDate, brand.id, brand.name from car " +
+            "inner join brand on brand.id = c.brandId";
+    private static final String SELECT_BY_ID = "select price, colour, createdDate, brand.id, brand.name from car " +
+            "inner join brand on brand.id = c.brandId " +
+            "where id = ?";
+    private static final String INSERT_SQL = "INSERT INTO car(price, colour, createdDate, brandId) VALUES(?, ?, ?, ?)";
 
-    private static final String GET_FULL_CAR = "select c.id, c.name, b.id, b.name " +
+    private static final String GET_FULL_CAR = "select c.id, c.name, brand.id, brand.name " +
             " from car c " +
-            " inner join brand b on b.id = c.brandId";
+            " inner join brand on brand.id = c.brandId";
+
+    private static final String DELETE_SQL = "Delete from car where id = ?";
 
     public Integer create(Car car) throws DaoException {
         try (Connection connection = PostgresUtils.getConnection();
@@ -37,8 +41,15 @@ public class CarDao {
         }
     }
 
-    public void delete(Car car) {
+    public void delete(Car car) throws DaoException {
+        try (Connection connection = PostgresUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
+            preparedStatement.setInt(1, car.getId());
 
+            preparedStatement.execute();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new DaoException();
+        }
     }
 
     public List<Car> findAll() {
@@ -51,7 +62,9 @@ public class CarDao {
             while (resultSet.next()) {
                 Car car = new Car();
                 car.setId(resultSet.getInt("c.id"));
-                car.setBrand(new Brand(resultSet.getInt("b.id"), resultSet.getString("b.name")));
+                car.setBrand(new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name")));
+                car.setColor(resultSet.getString("colour"));
+                car.setPrice(resultSet.getInt("price"));
                 cars.add(car);
             }
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -69,15 +82,16 @@ public class CarDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Car car = new Car();
-                car.setColor(resultSet.getString("color"));
-                car.setId(resultSet.getInt("id"));
-                car.setDate(resultSet.getDate("date"));
+                car.setId(resultSet.getInt("c.id"));
+                car.setBrand(new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name")));
+                car.setColor(resultSet.getString("colour"));
                 car.setPrice(resultSet.getInt("price"));
                 return car;
             }
+
+            return null;
         } catch (SQLException | ClassNotFoundException throwables) {
             throw new DaoException();
         }
-        return null;
     }
 }
