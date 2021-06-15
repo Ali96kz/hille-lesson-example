@@ -17,7 +17,7 @@ public class CarService {
         this.carDao = new CarDao();
     }
 
-    public int sumPriceAllCars() {
+    public int sumPriceAllCars() throws DaoException {
         List<Car> cars = carDao.findAll();
         int totalSum = 0;
         for (Car car : cars) {
@@ -27,7 +27,7 @@ public class CarService {
         return totalSum;
     }
 
-    public List<Car> findAll() {
+    public List<Car> findAll() throws DaoException {
         List<Car> cars = carDao.findAll();
         for (Car car : cars) {
             Integer id = car.getBrand().getId();
