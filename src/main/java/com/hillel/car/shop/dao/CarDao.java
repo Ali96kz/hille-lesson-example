@@ -32,15 +32,13 @@ public class CarDao {
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, car.getPrice());
             preparedStatement.setString(2, car.getColor());
-            preparedStatement.setDate(3, car.getDate());
-            preparedStatement.setInt(4, car.getBrand().getId());
+            preparedStatement.setDate(3, car.getDate());            preparedStatement.setInt(4, car.getBrand().getId());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             throw new DaoException();
         }
     }
-
     public void delete(Car car) throws DaoException {
         try (Connection connection = PostgresUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
@@ -52,7 +50,7 @@ public class CarDao {
         }
     }
 
-    public List<Car> findAll() {
+    public List<Car> findAll() throws DaoException {
         List<Car> cars = new ArrayList<>();
         try (
                 Connection connection = PostgresUtils.getConnection();
@@ -69,6 +67,7 @@ public class CarDao {
             }
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
+            throw new DaoException("Failed to save");
         }
         return cars;
     }
