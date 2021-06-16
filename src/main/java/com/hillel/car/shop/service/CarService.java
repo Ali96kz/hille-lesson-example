@@ -1,5 +1,6 @@
 package com.hillel.car.shop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hillel.car.shop.dao.BrandDAO;
@@ -7,6 +8,7 @@ import com.hillel.car.shop.dao.CarDao;
 import com.hillel.car.shop.dao.DaoException;
 import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.entity.Car;
+import com.hillel.car.shop.entity.Ford;
 
 public class CarService {
 
@@ -25,6 +27,12 @@ public class CarService {
         }
 
         return totalSum;
+    }
+
+    public void sumPriceWithObjects() {
+        List<Car> cars = new ArrayList<>();
+        cars.add(new Ford());
+
     }
 
     public List<Car> findAll() throws DaoException {

@@ -53,12 +53,12 @@ public class Car extends BaseEntity {
         if (o == null || getClass() != o.getClass())
             return false;
         Car car = (Car) o;
-        return price == car.price && Objects.equals(color, car.color) && Objects.equals(brand, car.brand) && Objects.equals(date, car.date);
+        return price == car.price && Objects.equals(brand, car.brand) && Objects.equals(date, car.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), price, color, brand, date);
+        return Objects.hash(getId(), price, brand, date);
     }
 
     @Override
