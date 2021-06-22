@@ -3,7 +3,7 @@ package com.hillel.car.shop.entity;
 import java.sql.Date;
 import java.util.Objects;
 
-public class Car extends BaseEntity {
+public class Car extends BaseEntity implements Comparable<Car> {
 
     private int price;
     private String color;
@@ -70,5 +70,16 @@ public class Car extends BaseEntity {
                 ", brand='" + brand + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Car o) {
+        if (this.price > o.price) {
+            return 1;
+        } else if (this.price < o.price) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
