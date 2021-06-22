@@ -12,9 +12,9 @@ public class SortedMapExample {
         List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
         Map<String, String> school = new HashMap<>();
 
-        school.put("Kristina", "234");
-        school.put("Abay", "B 234");
-        school.put("Sergey", "V 234");
+        school.put("Nikolay", "234");
+        school.put("Ernur", "B 234");
+        school.put("Andrey", "V 234");
 
         list.sort(Map.Entry.comparingByValue());
 
