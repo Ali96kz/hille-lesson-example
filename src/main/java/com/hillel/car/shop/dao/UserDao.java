@@ -12,6 +12,8 @@ import java.sql.SQLException;
 
 public class UserDao {
 
+    private BasketDao basketDao = new BasketDao();
+
     public User findByUsername(String username) throws DaoException {
         try (
                 Connection connection = PostgresUtils.getConnection();
@@ -24,8 +26,9 @@ public class UserDao {
                 int id = resultSet.getInt(1);
                 String usernameField = resultSet.getString(2);
                 String password = resultSet.getString(3);
+                int basketId = resultSet.getInt(4);
 
-                return new User(id, usernameField, password);
+                return new User(id, usernameField, password, basketDao.findById(basketId));
             }
 
             return null;

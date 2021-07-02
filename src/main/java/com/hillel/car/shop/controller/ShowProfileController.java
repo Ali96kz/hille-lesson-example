@@ -11,8 +11,12 @@ public class ShowProfileController implements Controller{
 
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
-        Object userId = req.getSession().getAttribute("userId");
+        Integer userId =(Integer) req.getSession().getAttribute("userId");
+        User user = null;
 
-        return null;
+        req.setAttribute("username", user.getName());
+        req.setAttribute("password", user.getPassword());
+
+        return new ControllerResultDto("profile");
     }
 }

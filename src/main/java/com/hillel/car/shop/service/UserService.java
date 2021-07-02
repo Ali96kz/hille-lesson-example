@@ -16,4 +16,15 @@ public class UserService {
             return null;
         }
     }
+
+
+    public User findById(Integer id) {
+        try {
+            return userDao.findByUsername(id);
+        } catch (DaoException e) {
+            System.out.println("Failed to find");
+            return null;
+        }
+    }
+
 }

@@ -7,7 +7,7 @@ public class Client extends User{
     private String name;
 
     public Client(Integer id, String name, String password) {
-        super(id, name, password);
+        super(id, name, password, null);
     }
 
     @Override

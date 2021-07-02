@@ -21,9 +21,9 @@ public class CarDao {
             "where id = ?";
     private static final String INSERT_SQL = "INSERT INTO car(price, colour, createdDate, brandId) VALUES(?, ?, ?, ?)";
 
-    private static final String GET_FULL_CAR = "select c.id, c.name, brand.id, brand.name " +
+    private static final String GET_FULL_CAR = "select c.id, c.name, c.price, brand.id as brandId, brand.name as brandName" +
             " from car c " +
-            " inner join brand on brand.id = c.brandId";
+            " inner join brand brand on brand.id = c.brandId";
 
     private static final String DELETE_SQL = "Delete from car where id = ?";
 
@@ -39,6 +39,7 @@ public class CarDao {
             throw new DaoException();
         }
     }
+
     public void delete(Car car) throws DaoException {
         try (Connection connection = PostgresUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
@@ -59,9 +60,8 @@ public class CarDao {
         ) {
             while (resultSet.next()) {
                 Car car = new Car();
-                car.setId(resultSet.getInt("c.id"));
-                car.setBrand(new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name")));
-                car.setColor(resultSet.getString("colour"));
+                car.setId(resultSet.getInt("id"));
+                car.setBrand(new Brand(resultSet.getInt("brandId"), resultSet.getString("brandName")));
                 car.setPrice(resultSet.getInt("price"));
                 cars.add(car);
             }

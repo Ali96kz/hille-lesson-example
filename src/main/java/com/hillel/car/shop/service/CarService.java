@@ -37,11 +37,6 @@ public class CarService {
 
     public List<Car> findAll() throws DaoException {
         List<Car> cars = carDao.findAll();
-        for (Car car : cars) {
-            Integer id = car.getBrand().getId();
-            Brand brand = brandDAO.findById(id);
-            car.setBrand(brand);
-        }
         return cars;
     }
 
