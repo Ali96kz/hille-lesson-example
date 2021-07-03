@@ -13,12 +13,16 @@ import com.hillel.car.shop.entity.Car;
 import com.hillel.car.shop.utils.PostgresUtils;
 
 public class CarDao {
-    private BrandDAO brandDAO = new BrandDAO();
-    private static final String SELECT_ALL = "select price, colour, createdDate, brand.id, brand.name from car " +
-            "inner join brand on brand.id = c.brandId";
-    private static final String SELECT_BY_ID = "select price, colour, createdDate, brand.id, brand.name from car " +
-            "inner join brand on brand.id = c.brandId " +
-            "where id = ?";
+
+    private static final String SELECT_BY_ID = "" +
+            "select c.id       as carId," +
+            "       c.name     as carName," +
+            "       c.price    as carPrice," +
+            "       brand.id   as brandId," +
+            "       brand.name as brandName" +
+            " from car c " +
+            "         inner join brand brand on brand.id = c.brandId" +
+            " where c.id = ?";
     private static final String INSERT_SQL = "INSERT INTO car(price, colour, createdDate, brandId) VALUES(?, ?, ?, ?)";
 
     private static final String GET_FULL_CAR = "select c.id, c.name, c.price, brand.id as brandId, brand.name as brandName" +
@@ -61,6 +65,7 @@ public class CarDao {
             while (resultSet.next()) {
                 Car car = new Car();
                 car.setId(resultSet.getInt("id"));
+                car.setName(resultSet.getString("name"));
                 car.setBrand(new Brand(resultSet.getInt("brandId"), resultSet.getString("brandName")));
                 car.setPrice(resultSet.getInt("price"));
                 cars.add(car);
@@ -80,17 +85,21 @@ public class CarDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                int brandId = resultSet.getInt("brandId");
+                String brandName = resultSet.getString("brandName");
+                Brand brand = new Brand(brandId, brandName);
+
                 Car car = new Car();
-                car.setId(resultSet.getInt("c.id"));
-                car.setBrand(new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name")));
-                car.setName(resultSet.getString("colour"));
-                car.setPrice(resultSet.getInt("price"));
+                car.setBrand(brand);
+                car.setId(resultSet.getInt("carId"));
+                car.setName(resultSet.getString("carName"));
+                car.setPrice(resultSet.getInt("carPrice"));
                 return car;
             }
 
             return null;
         } catch (SQLException | ClassNotFoundException throwables) {
-            throw new DaoException();
+            throw new DaoException("failed to get all", throwables);
         }
     }
 }

@@ -1,6 +1,7 @@
 drop table IF EXISTS car;
 drop table IF EXISTS brand;
 drop table IF EXISTS users;
+drop table IF EXISTS basket;
 
 create table users
 (
@@ -26,6 +27,7 @@ CREATE TABLE car
 
 create table basket
 (
+    id     SERIAL PRIMARY KEY,
     userId integer REFERENCES brand (id),
     carId  integer REFERENCES car (id)
 );

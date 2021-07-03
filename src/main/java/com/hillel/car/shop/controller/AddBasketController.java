@@ -22,12 +22,12 @@ public class AddBasketController implements Controller {
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
             String carId = req.getParameter("carId");
-            Car car = carService.getById(Integer.parseInt(carId));
+            Car car = carService.findById(Integer.parseInt(carId));
 
             Integer userId = (Integer) req.getSession().getAttribute("userId");
 
             User user = userService.findById(userId);
-            Basket basket = basketService.findForUser(user);
+            Basket basket = basketService.findOrCreateForUser(user);
 
             Car deleteCar = null;
             for (Car basketCar : basket.getCars()) {
@@ -41,7 +41,7 @@ public class AddBasketController implements Controller {
 
             basketService.createOrUpdate(basket);
 
-            return new ControllerResultDto("asd");
+            return new ControllerResultDto("cars", true);
         } catch (ServiceException e) {
             return new ControllerResultDto("error-500");
         }

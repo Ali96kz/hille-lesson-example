@@ -5,6 +5,8 @@ import com.hillel.car.shop.dao.DaoException;
 import com.hillel.car.shop.entity.Basket;
 import com.hillel.car.shop.entity.User;
 
+import java.util.ArrayList;
+
 public class BasketService {
 
     private BasketDao basketDao = new BasketDao();
@@ -17,9 +19,11 @@ public class BasketService {
         }
     }
 
-    public Basket findForUser(User user) throws ServiceException {
+    public Basket findOrCreateForUser(User user) throws ServiceException {
         try {
-            return basketDao.findById(user);
+            Basket basket = basketDao.findById(user);
+
+            return basket == null ? new Basket(null, user, new ArrayList<>()) : basket;
         } catch (DaoException e) {
             throw new ServiceException("Failed to find");
         }

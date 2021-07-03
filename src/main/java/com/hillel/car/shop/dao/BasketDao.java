@@ -20,16 +20,16 @@ public class BasketDao {
     private static final String INSERT_SQL = "INSERT INTO basket(userId, carId) VALUES(?, ?)";
     private static final String DELETE_BASKET_SQL = "DELETE FROM Basket WHERE userId = ?";
     private static final String FIND_BY_ID = "select " +
-            "id as basketId" +
+            "basket.id as basketId, " +
             "c.id       as carId, " +
             "c.name     as carName, " +
             "c.price    as carPrice, " +
             "b.id       as branId, " +
             "b.name     as brandName " +
-            "FROM basket " +
+            "FROM basket basket " +
             " INNER JOIN users u on u.id = basket.userId " +
             " INNER JOIN car c on c.id = basket.carId " +
-            " INNER JOIN brand b on c.brandid = b.id;  " +
+            " INNER JOIN brand b on c.brandid = b.id  " +
             " where u.id = ?";
 
 
@@ -88,6 +88,11 @@ public class BasketDao {
             }
             basket.setCars(cars);
             basket.setUser(user);
+
+            if (basket.getId() == null) {
+                return null;
+            }
+
             return basket;
         } catch (SQLException | ClassNotFoundException e) {
             throw new DaoException();

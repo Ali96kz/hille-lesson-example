@@ -22,7 +22,7 @@ public class LoginController implements Controller{
             req.setAttribute("user", user);
 
             HttpSession session = req.getSession();
-            session.setAttribute("userId", user.getName());
+            session.setAttribute("userId", user.getId());
             return new ControllerResultDto("profile");
         } else {
             return new ControllerResultDto("error-403");

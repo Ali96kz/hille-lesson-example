@@ -19,7 +19,7 @@ public class ShowBasketController implements Controller {
         try {
             Integer userId = (Integer) req.getSession().getAttribute("userId");
             User user = userService.findById(userId);
-            Basket basket = basketService.findForUser(user);
+            Basket basket = basketService.findOrCreateForUser(user);
             req.setAttribute("basket", basket);
             return new ControllerResultDto("basket");
         } catch (ServiceException e) {
