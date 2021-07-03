@@ -6,8 +6,12 @@
     <title>Profile </title>
 </head>
 <body>
-  <p>Id : ${user.id}</p>
-  <p>Name : ${user.name}</p>
-  <p>Password : ${user.password}</p>
+<p>Id : ${user.id}</p>
+<p>Name : ${user.name}</p>
+<p>Password : ${user.password}</p>
+
+<a href="cars">view all cars</a>
+<a href="basket">view my basket</a>
+
 </body>
 </html>

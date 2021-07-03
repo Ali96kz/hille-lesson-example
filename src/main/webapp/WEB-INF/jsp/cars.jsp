@@ -7,6 +7,8 @@
     <title>Profile </title>
 </head>
 <body>
+<a href="basket">view my basket</a>
+
 <c:forEach items="${cars}" var="car">
     <br>
     <c:out value="${car.id}"/>
@@ -14,5 +16,7 @@
     <br>
     <a href="addToBasket?carId=${car.id}">${car.name}</a>
 </c:forEach>
+
+
 </body>
 </html>

@@ -14,5 +14,8 @@
     <c:out value="${car.name}"/>
     <br>
 </c:forEach>
+
+<a href="cars">view all cars</a>
+
 </body>
 </html>
