@@ -55,7 +55,7 @@ public class BasketDao {
         try (Connection connection = PostgresUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BASKET_SQL)) {
             preparedStatement.setInt(1, basket.getUser().getId());
-
+            preparedStatement.execute();
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new DaoException();
