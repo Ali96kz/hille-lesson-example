@@ -24,7 +24,7 @@ public class BasketDao {
             "c.id       as carId, " +
             "c.name     as carName, " +
             "c.price    as carPrice, " +
-            "b.id       as branId, " +
+            "b.id       as brandId, " +
             "b.name     as brandName " +
             "FROM basket basket " +
             " INNER JOIN users u on u.id = basket.userId " +

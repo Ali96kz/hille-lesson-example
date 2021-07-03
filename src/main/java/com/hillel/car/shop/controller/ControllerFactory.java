@@ -15,6 +15,7 @@ public class ControllerFactory {
         controllerMap.put("GET/client", new ShowPageController("login"));
         controllerMap.put("GET/cars", new ShowAllCarsController());
         controllerMap.put("GET/addToBasket", new AddBasketController());
+        controllerMap.put("GET/basket", new ShowBasketController());
 
         controllerMap.put("POST/login", new LoginController());
     }

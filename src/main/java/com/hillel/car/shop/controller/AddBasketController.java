@@ -10,7 +10,6 @@ import com.hillel.car.shop.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 public class AddBasketController implements Controller {
 
@@ -28,17 +27,7 @@ public class AddBasketController implements Controller {
 
             User user = userService.findById(userId);
             Basket basket = basketService.findOrCreateForUser(user);
-
-            Car deleteCar = null;
-            for (Car basketCar : basket.getCars()) {
-                if (Objects.equals(basketCar.getId(), car.getId())) {
-                    deleteCar = car;
-                    break;
-                }
-            }
-
-            basket.getCars().remove(deleteCar);
-
+            basket.getCars().add(car);
             basketService.createOrUpdate(basket);
 
             return new ControllerResultDto("cars", true);
