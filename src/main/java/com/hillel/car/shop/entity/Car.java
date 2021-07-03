@@ -1,17 +1,22 @@
 package com.hillel.car.shop.entity;
 
-import java.sql.Date;
 import java.util.Objects;
 
 public class Car extends BaseEntity implements Comparable<Car> {
 
     private int price;
-    private String color;
+    private String name;
     private Brand brand;
-    private Date date;
 
     public Car() {
-        super(2);
+        super(null);
+    }
+
+    public Car(Integer id, int price, String name, Brand brand) {
+        super(id);
+        this.price = price;
+        this.name = name;
+        this.brand = brand;
     }
 
     public int getPrice() {
@@ -22,12 +27,12 @@ public class Car extends BaseEntity implements Comparable<Car> {
         this.price = price;
     }
 
-    public String getColor() {
-        return color;
+    public String getName() {
+        return name;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Brand getBrand() {
@@ -38,14 +43,6 @@ public class Car extends BaseEntity implements Comparable<Car> {
         this.brand = brand;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -53,12 +50,12 @@ public class Car extends BaseEntity implements Comparable<Car> {
         if (o == null || getClass() != o.getClass())
             return false;
         Car car = (Car) o;
-        return price == car.price && Objects.equals(brand, car.brand) && Objects.equals(date, car.date);
+        return price == car.price && Objects.equals(brand, car.brand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), price, brand, date);
+        return Objects.hash(getId(), price, brand);
     }
 
     @Override
@@ -66,9 +63,8 @@ public class Car extends BaseEntity implements Comparable<Car> {
         return "Car{" +
                 "id=" + getId() +
                 ", price=" + price +
-                ", color='" + color + '\'' +
+                ", color='" + name + '\'' +
                 ", brand='" + brand + '\'' +
-                ", date=" + date +
                 '}';
     }
 

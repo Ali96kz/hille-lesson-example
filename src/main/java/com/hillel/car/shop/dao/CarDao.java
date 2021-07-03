@@ -31,8 +31,8 @@ public class CarDao {
         try (Connection connection = PostgresUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, car.getPrice());
-            preparedStatement.setString(2, car.getColor());
-            preparedStatement.setDate(3, car.getDate());            preparedStatement.setInt(4, car.getBrand().getId());
+            preparedStatement.setString(2, car.getName());
+            preparedStatement.setInt(4, car.getBrand().getId());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -83,7 +83,7 @@ public class CarDao {
                 Car car = new Car();
                 car.setId(resultSet.getInt("c.id"));
                 car.setBrand(new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name")));
-                car.setColor(resultSet.getString("colour"));
+                car.setName(resultSet.getString("colour"));
                 car.setPrice(resultSet.getInt("price"));
                 return car;
             }

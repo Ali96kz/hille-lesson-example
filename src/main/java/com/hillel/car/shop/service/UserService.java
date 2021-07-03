@@ -8,7 +8,7 @@ public class UserService {
 
     private UserDao userDao = new UserDao();
 
-    public User getByUserName(String username) {
+    public User findByUserName(String username) {
         try {
             return userDao.findByUsername(username);
         } catch (DaoException e) {
@@ -20,7 +20,7 @@ public class UserService {
 
     public User findById(Integer id) {
         try {
-            return userDao.findByUsername(id);
+            return userDao.findById(id);
         } catch (DaoException e) {
             System.out.println("Failed to find");
             return null;
