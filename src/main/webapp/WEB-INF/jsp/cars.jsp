@@ -13,8 +13,7 @@
     <br>
     <c:out value="${car.id}"/>
     <c:out value="${car.name}"/>
-    <br>
-    <a href="addToBasket?carId=${car.id}">${car.name}</a>
+    <a href="addToBasket?carId=${car.id}">Buy these car</a>
 </c:forEach>
 
 
