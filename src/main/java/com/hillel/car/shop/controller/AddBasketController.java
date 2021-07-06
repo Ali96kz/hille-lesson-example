@@ -24,7 +24,7 @@ public class AddBasketController implements Controller {
             Car car = carService.findById(Integer.parseInt(carId));
 
             Integer userId = (Integer) req.getSession().getAttribute("userId");
-
+            req.getSession().setAttribute("userId", null);
             User user = userService.findById(userId);
             Basket basket = basketService.findOrCreateForUser(user);
             basket.getCars().add(car);
