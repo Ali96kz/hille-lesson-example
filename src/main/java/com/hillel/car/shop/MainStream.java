@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,12 @@ public class MainStream {
 
         for (Integer integer : simpleArrayList) {
 
+        }
+
+        Random random = new Random();
+        List<String> stringList = new ArrayList<>();
+        while (true) {
+            stringList.add("asd" + random.nextDouble());
         }
     }
 
@@ -63,6 +70,7 @@ public class MainStream {
             }
         }
 
+        integers = null;
 
         List<Integer> collect = integers.stream()
                 .map(Integer::parseInt)
