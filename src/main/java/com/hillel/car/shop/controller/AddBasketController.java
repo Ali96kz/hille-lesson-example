@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddBasketController implements Controller {
 
     private final UserService userService = new UserService();
-    private final CarService carService = new CarService();
+    private  CarService carService;
     private final BasketService basketService = new BasketService();
 
     @Override

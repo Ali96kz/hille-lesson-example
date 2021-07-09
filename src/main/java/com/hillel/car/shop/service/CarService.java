@@ -5,13 +5,15 @@ import java.util.List;
 import com.hillel.car.shop.dao.CarDao;
 import com.hillel.car.shop.dao.DaoException;
 import com.hillel.car.shop.entity.Car;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CarService {
 
-    private CarDao carDao;
+    private final CarDao carDao;
 
-    public CarService() {
-        this.carDao = new CarDao();
+    public CarService(CarDao carDao){
+        this.carDao = carDao;
     }
 
     public List<Car> findAll() throws DaoException {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ShowAllCarsController implements Controller {
 
-    private CarService carService = new CarService();
+    private CarService carService;
 
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
