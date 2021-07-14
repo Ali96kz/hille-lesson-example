@@ -1,5 +1,7 @@
 package com.hillel.car.shop.dao;
 
+import com.hillel.car.shop.ConnectionPool;
+import com.hillel.car.shop.MySpecialContext;
 import com.hillel.car.shop.entity.Basket;
 import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.entity.Car;
@@ -63,7 +65,9 @@ public class BasketDao {
     }
 
     public Basket findById(User user) throws DaoException {
-        try (Connection connection = PostgresUtils.getConnection();
+        ConnectionPool connectionPool = MySpecialContext.get();
+
+        try (Connection connection = connectionPool.get();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, user.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -94,7 +98,7 @@ public class BasketDao {
             }
 
             return basket;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             throw new DaoException();
         }
     }

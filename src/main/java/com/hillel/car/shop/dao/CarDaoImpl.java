@@ -10,9 +10,11 @@ import java.util.List;
 
 import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.entity.Car;
+import com.hillel.car.shop.SimpleAnnotaion;
+import com.hillel.car.shop.service.CarDao;
 import com.hillel.car.shop.utils.PostgresUtils;
 
-public class CarDao {
+public class CarDaoImpl implements CarDao {
 
     private static final String SELECT_BY_ID = "" +
             "select c.id       as carId," +
@@ -31,6 +33,7 @@ public class CarDao {
 
     private static final String DELETE_SQL = "Delete from car where id = ?";
 
+    @SimpleAnnotaion(name = "")
     public Integer create(Car car) throws DaoException {
         try (Connection connection = PostgresUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -44,6 +47,7 @@ public class CarDao {
         }
     }
 
+    @Override
     public void delete(Car car) throws DaoException {
         try (Connection connection = PostgresUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
@@ -77,6 +81,12 @@ public class CarDao {
         return cars;
     }
 
+    public void deleteALL() {
+
+    }
+
+
+    @Override
     public Car getById(int id) throws DaoException {
         try (
                 Connection connection = PostgresUtils.getConnection();

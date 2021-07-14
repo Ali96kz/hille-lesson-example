@@ -1,5 +1,6 @@
 package com.hillel.car.shop.controller;
 
+import com.hillel.car.shop.dao.CarDaoImpl;
 import com.hillel.car.shop.entity.Basket;
 import com.hillel.car.shop.entity.Car;
 import com.hillel.car.shop.entity.User;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddBasketController implements Controller {
 
     private final UserService userService = new UserService();
-    private final CarService carService = new CarService();
+    private final CarService carService = new CarService(new CarDaoImpl());
     private final BasketService basketService = new BasketService();
 
     @Override
