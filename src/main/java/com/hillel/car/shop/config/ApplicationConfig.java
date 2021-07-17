@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ import java.sql.SQLException;
  */
 @Configuration
 @ComponentScan(basePackages = "com.hillel.car.shop")
+@EnableJpaRepositories(basePackages = "com.hillel.car.shop.repository")
 @PropertySource("classpath:application.properties")
 public class ApplicationConfig {
 
@@ -35,12 +37,13 @@ public class ApplicationConfig {
     Environment env;
 
     @Bean
-    public DataSource getDataSource(@Value("${datasource.username}") String userName) throws SQLException {
+    public DataSource getDataSource() throws SQLException {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
-//        pgSimpleDataSource.setUser(env.getProperty("datasource.username"));
-        pgSimpleDataSource.setUser(userName);
+        pgSimpleDataSource.setUser(env.getProperty("datasource.username"));
         pgSimpleDataSource.setUrl(env.getProperty("datasource.url"));
         pgSimpleDataSource.setPassword(env.getProperty("datasource.password"));
         return pgSimpleDataSource.unwrap(DataSource.class);
     }
+
+
 }

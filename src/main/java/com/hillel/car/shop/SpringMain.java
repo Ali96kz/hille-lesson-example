@@ -12,6 +12,8 @@ package com.hillel.car.shop;
 
 import com.hillel.car.shop.config.ApplicationConfig;
 import com.hillel.car.shop.entity.Car;
+import com.hillel.car.shop.entity.Office;
+import com.hillel.car.shop.repository.OfficeRepository;
 import com.hillel.car.shop.service.CarService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -29,8 +31,13 @@ public class SpringMain {
 //            final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext("com/hillel/car/shop")
             final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfig.class)
         ) {
+
             final String[] beanDefinitionNames = ctx.getBeanDefinitionNames();
             System.out.println(Arrays.toString(beanDefinitionNames));
+
+            final OfficeRepository officeRepository = ctx.getBean(OfficeRepository.class);
+            final List<Office> all1 = officeRepository.findAll();
+            all1.forEach(System.out::println);
             final CarService carService = ctx.getBean(CarService.class);
             final List<Car> all = carService.findAll();
             System.out.println(all.toString());

@@ -10,8 +10,18 @@ import java.util.List;
 
 import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.utils.PostgresUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+
+@Repository
 public class BrandDAO {
+
+    @Autowired
+    private DataSource dataSource;
+
     private static final String INSERT_SQL = "INSERT INTO brand(name) VALUES(?)";
     private static final String SELECT_ALL = "select id, name from brand";
 

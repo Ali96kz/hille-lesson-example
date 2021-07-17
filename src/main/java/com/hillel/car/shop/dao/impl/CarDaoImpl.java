@@ -4,8 +4,14 @@ import com.hillel.car.shop.dao.CarDao;
 import com.hillel.car.shop.dao.DaoException;
 import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.entity.Car;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +19,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Repository
+@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CarDaoImpl implements CarDao {
 
-    private final DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
+
+    private Map<String, Integer> testMap;
 
     private static final String SELECT_BY_ID = "" +
         "select c.id       as carId," +
@@ -37,8 +50,24 @@ public class CarDaoImpl implements CarDao {
 
     private static final String DELETE_SQL = "Delete from car where id = ?";
 
-    public CarDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    @PostConstruct
+    public void preStart() {
+        testMap = new HashMap<>();
+        System.out.println("Инициализирую Мапу");
+        Random r = new Random();
+        testMap.put("test1", r.nextInt());
+        testMap.put("test2", r.nextInt());
+        testMap.put("test3", r.nextInt());
+        testMap.put("test4", r.nextInt());
+    }
+
+    @PreDestroy
+    public void preStop() {
+
+    }
+
+    public Integer getFromMyTestMap(String key) {
+        return testMap.get(key);
     }
 
     @Override

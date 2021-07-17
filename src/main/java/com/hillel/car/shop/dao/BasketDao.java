@@ -5,6 +5,7 @@ import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.entity.Car;
 import com.hillel.car.shop.entity.User;
 import com.hillel.car.shop.utils.PostgresUtils;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class BasketDao {
 
     private static final String INSERT_SQL = "INSERT INTO basket(userId, carId) VALUES(?, ?)";

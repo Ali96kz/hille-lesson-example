@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -24,6 +25,25 @@
             <artifactId>spring-context</artifactId>
             <version>5.3.8</version>
         </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-jpa</artifactId>-->
+<!--            <version>2.3.4.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>javax.persistence</groupId>-->
+<!--            <artifactId>javax.persistence-api</artifactId>-->
+<!--            <version>2.2</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>2.3.4.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -61,4 +81,12 @@
             <version>42.2.20</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
