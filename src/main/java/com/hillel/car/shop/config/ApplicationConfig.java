@@ -10,18 +10,12 @@
 
 package com.hillel.car.shop.config;
 
-import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import javax.sql.DataSource;
-import java.sql.SQLException;
 
 /**
  * @author Afanasev E.V.
@@ -36,14 +30,14 @@ public class ApplicationConfig {
     @Autowired
     Environment env;
 
-    @Bean
-    public DataSource getDataSource() throws SQLException {
-        PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
-        pgSimpleDataSource.setUser(env.getProperty("datasource.username"));
-        pgSimpleDataSource.setUrl(env.getProperty("datasource.url"));
-        pgSimpleDataSource.setPassword(env.getProperty("datasource.password"));
-        return pgSimpleDataSource.unwrap(DataSource.class);
-    }
+//    @Bean
+//    public DataSource getDataSource() throws SQLException {
+//        PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
+//        pgSimpleDataSource.setUser(env.getProperty("datasource.username"));
+//        pgSimpleDataSource.setUrl(env.getProperty("datasource.url"));
+//        pgSimpleDataSource.setPassword(env.getProperty("datasource.password"));
+//        return pgSimpleDataSource.unwrap(DataSource.class);
+//    }
 
 
 }

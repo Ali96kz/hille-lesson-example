@@ -10,6 +10,7 @@
 
 package com.hillel.car.shop.entity;
 
+import lombok.Data;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GeneratorType;
 
@@ -29,6 +30,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "office")
+@Data
 public class Office {
 
     @Id
@@ -38,7 +40,7 @@ public class Office {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "office", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
     private Set<Employee> employeeList;
 
     @Override

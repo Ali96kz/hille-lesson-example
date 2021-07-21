@@ -4,6 +4,7 @@ import com.hillel.car.shop.dao.CarDao;
 import com.hillel.car.shop.dao.DaoException;
 import com.hillel.car.shop.entity.Brand;
 import com.hillel.car.shop.entity.Car;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -26,10 +27,10 @@ import java.util.Random;
 
 @Repository
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@RequiredArgsConstructor
 public class CarDaoImpl implements CarDao {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     private Map<String, Integer> testMap;
 
