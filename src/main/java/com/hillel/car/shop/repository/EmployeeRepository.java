@@ -11,6 +11,8 @@
 package com.hillel.car.shop.repository;
 
 import com.hillel.car.shop.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,5 +33,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("select e from Employee e join fetch e.office where e.income = :income_param")
     List<Employee> mySimpleMethod2(@Param("income_param") Long income);
 
-
+    Page<Employee> findAllByAgeBetweenOrderByAge(Long from, Long to, Pageable pageable);
 }

@@ -16,17 +16,12 @@ import lombok.Setter;
 
 /**
  * @author Afanasev E.V.
- * @version 1.0 7/17/2021
+ * @version 1.0 7/31/2021
  */
 @Getter
 @Setter
 @NoArgsConstructor
-public class EmployeeDTO {
-
+public class OfficeDTO {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private Long age;
-    private Long income;
-
+    private String address;
 }

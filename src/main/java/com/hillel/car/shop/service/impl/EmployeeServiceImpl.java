@@ -10,14 +10,19 @@
 
 package com.hillel.car.shop.service.impl;
 
+import com.hillel.car.shop.dto.EmployeeDTO;
 import com.hillel.car.shop.entity.Employee;
 import com.hillel.car.shop.repository.EmployeeRepository;
 import com.hillel.car.shop.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * @author Afanasev E.V.
@@ -41,5 +46,40 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAll() {
         return employeeRepository.findAll();
+    }
+
+    public Page<Employee> getPage(Long ageFrom, Long ageTo, Pageable pageable) {
+        return employeeRepository.findAllByAgeBetweenOrderByAge(ageFrom, ageTo, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Employee create(EmployeeDTO employeeDTO) {
+        if (!Objects.isNull(employeeDTO.getId())){
+            throw new IllegalArgumentException("internal error");
+        }
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        if(!employeeRepository.existsById(id)){
+            throw new IllegalArgumentException(String.format("No Employee with id %s exists!",id));
+        }
+        employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(Long id, EmployeeDTO employeeDTO) {
+        if(!employeeRepository.existsById(id)){
+            throw new IllegalArgumentException(String.format("No Employee with id %s exists!",id));
+        }
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setId(id);
+        employeeRepository.save(employee);
     }
 }

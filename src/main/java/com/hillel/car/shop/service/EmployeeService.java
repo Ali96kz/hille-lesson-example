@@ -10,7 +10,10 @@
 
 package com.hillel.car.shop.service;
 
+import com.hillel.car.shop.dto.EmployeeDTO;
 import com.hillel.car.shop.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -22,4 +25,8 @@ public interface EmployeeService {
 
     Employee getById(Long id);
     List<Employee> getAll();
+    Page<Employee> getPage(Long ageFrom, Long ageTo,Pageable pageable);
+    Employee create(EmployeeDTO employeeDTO);
+    void delete(Long id);
+    void update(Long id, EmployeeDTO employeeDTO);
 }

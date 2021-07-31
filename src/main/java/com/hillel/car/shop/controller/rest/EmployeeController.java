@@ -11,21 +11,26 @@
 package com.hillel.car.shop.controller.rest;
 
 import com.hillel.car.shop.dto.EmployeeDTO;
+import com.hillel.car.shop.dto.EmployeeExtensionDTO;
 import com.hillel.car.shop.entity.Employee;
 import com.hillel.car.shop.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -36,23 +41,11 @@ import java.util.stream.Collectors;
  * @version 1.0 7/21/2021
  */
 @RequestMapping(value = "/rest/employees", produces = MediaType.APPLICATION_JSON_VALUE)
-//@Controller
-//@ResponseBody
 @RestController
 @RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-
-//    @RequestMapping(value = "/employee")
-//    public List<Employee> getAll(){
-//        return null;
-//    }
-
-//@RequestMapping(value = "/getTest2", method = RequestMethod.GET)
-//    public String getSomeString2(){
-//        return "test2";
-//    }
 
     @RequestMapping(value = "/get-test", method = RequestMethod.GET)
     public String getSomeString() {
@@ -61,11 +54,6 @@ public class EmployeeController {
 
     @GetMapping(value = "/get-one")
     public ResponseEntity<EmployeeDTO> getById(@RequestParam long id) {
-//        Employee employee = Employee.builder()
-//            .age(30L)
-//            .firstName("Max")
-//            .lastName("Petrov")
-//            .build();
         final Employee employee = employeeService.getById(id);
         EmployeeDTO employeeDTO = new EmployeeDTO();
         BeanUtils.copyProperties(employee, employeeDTO);
@@ -74,11 +62,7 @@ public class EmployeeController {
 
     @GetMapping(value = "/get-one/{id}")
     public ResponseEntity<EmployeeDTO> getById2(@PathVariable long id) {
-//        Employee employee = Employee.builder()
-//            .age(30L)
-//            .firstName("Max")
-//            .lastName("Petrov")
-//            .build();
+
         final Employee employee = employeeService.getById(id);
         EmployeeDTO employeeDTO = new EmployeeDTO();
         BeanUtils.copyProperties(employee, employeeDTO);
@@ -98,5 +82,53 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<Page<EmployeeDTO>> getPage(
+        @RequestParam(required = false, defaultValue = "1") Long ageFrom,
+        @RequestParam(required = false, defaultValue = "999") Long ageTo,
+        @RequestParam int pageSize,
+        @RequestParam int pageNumber
+    ) {
+        final PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        final Page<Employee> pageEmployee = employeeService.getPage(ageFrom, ageTo, pageRequest);
+        final Page<EmployeeDTO> pageEmployeeDTO = pageEmployee.map(employee -> {
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            BeanUtils.copyProperties(employee, employeeDTO);
+            return employeeDTO;
+        });
+        return new ResponseEntity<>(pageEmployeeDTO, HttpStatus.OK);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EmployeeDTO> create(
+        @RequestBody EmployeeDTO employeeDTO
+    ) {
+        final Employee employee = employeeService.create(employeeDTO);
+        employeeDTO.setId(employee.getId());
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        employeeService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void update(
+        @PathVariable Long id,
+        @RequestBody EmployeeDTO employeeDTO
+    ) {
+        employeeService.update(id, employeeDTO);
+    }
+
+    @PostMapping(path = "/create-employee-extension", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EmployeeExtensionDTO> createEmployeeExtensionDTO(
+        @RequestBody EmployeeExtensionDTO employeeExtensionDTO
+    ) {
+
+        return new ResponseEntity<>(employeeExtensionDTO, HttpStatus.OK);
+    }
 }
 
