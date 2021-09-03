@@ -25,6 +25,7 @@ public interface EmployeeService {
 
     Employee getById(Long id);
     List<Employee> getAll();
+    List<Employee> getByName(String name);
     Page<Employee> getPage(Long ageFrom, Long ageTo,Pageable pageable);
     Employee create(EmployeeDTO employeeDTO);
     void delete(Long id);

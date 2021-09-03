@@ -54,7 +54,7 @@ public class CarDaoImpl implements CarDao {
     @PostConstruct
     public void preStart() {
         testMap = new HashMap<>();
-        System.out.println("Инициализирую Мапу");
+//        System.out.println("Инициализирую Мапу");
         Random r = new Random();
         testMap.put("test1", r.nextInt());
         testMap.put("test2", r.nextInt());

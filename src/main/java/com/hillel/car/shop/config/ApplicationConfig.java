@@ -13,6 +13,7 @@ package com.hillel.car.shop.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -21,6 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author Afanasev E.V.
  * @version 1.0 7/9/2021
  */
+//@Profile(value = {"test"})
 @Configuration
 @ComponentScan(basePackages = "com.hillel.car.shop")
 @EnableJpaRepositories(basePackages = "com.hillel.car.shop.repository")

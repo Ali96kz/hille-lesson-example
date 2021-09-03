@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/rest/employees", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -69,9 +71,26 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
+    //    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAll() {
         List<Employee> employeeList = employeeService.getAll();
+        List<EmployeeDTO> employeeDTOList = employeeList.stream()
+            .map(employee -> {
+                EmployeeDTO employeeDTO = new EmployeeDTO();
+                BeanUtils.copyProperties(employee, employeeDTO);
+                return employeeDTO;
+            })
+            .collect(Collectors.toList());
+        return new ResponseEntity<>(employeeDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<EmployeeDTO>> getByName(
+        @RequestParam String firstName,
+        @RequestParam(required = false,defaultValue = "test") String lastName
+    ) {
+        List<Employee> employeeList = employeeService.getByName(firstName);
         List<EmployeeDTO> employeeDTOList = employeeList.stream()
             .map(employee -> {
                 EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -99,6 +118,7 @@ public class EmployeeController {
         return new ResponseEntity<>(pageEmployeeDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeDTO> create(
         @RequestBody EmployeeDTO employeeDTO
@@ -108,12 +128,14 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         employeeService.delete(id);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(
@@ -123,6 +145,7 @@ public class EmployeeController {
         employeeService.update(id, employeeDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(path = "/create-employee-extension", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeExtensionDTO> createEmployeeExtensionDTO(
         @RequestBody EmployeeExtensionDTO employeeExtensionDTO
@@ -130,5 +153,6 @@ public class EmployeeController {
 
         return new ResponseEntity<>(employeeExtensionDTO, HttpStatus.OK);
     }
+
 }
 

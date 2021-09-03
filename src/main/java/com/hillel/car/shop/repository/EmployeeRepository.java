@@ -27,6 +27,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllByAgeBetween(Long from, Long to);
 
+    List<Employee> findAllByFirstName(String name);
+
     @Query(value = "select * from employee where income = :income_param", nativeQuery = true)
     List<Employee> mySimpleMethod(@Param("income_param") Long income);
 

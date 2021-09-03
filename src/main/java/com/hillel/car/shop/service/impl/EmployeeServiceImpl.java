@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,12 +49,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll();
     }
 
+    @Override
+    public List<Employee> getByName(String name) {
+        return employeeRepository.findAllByFirstName(name);
+    }
+
     public Page<Employee> getPage(Long ageFrom, Long ageTo, Pageable pageable) {
         return employeeRepository.findAllByAgeBetweenOrderByAge(ageFrom, ageTo, pageable);
     }
 
     @Override
     @Transactional
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     public Employee create(EmployeeDTO employeeDTO) {
         if (!Objects.isNull(employeeDTO.getId())){
             throw new IllegalArgumentException("internal error");
