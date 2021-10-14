@@ -10,16 +10,10 @@ import java.util.List;
 
 public class ShowAllCarsController implements Controller {
 
-    private CarService carService = new CarService();
+
 
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            List<Car> cars = carService.findAll();
-            req.setAttribute("cars", cars);
-            return new ControllerResultDto("cars");
-        } catch (DaoException e) {
-            return null;
-        }
+       return null;
     }
 }

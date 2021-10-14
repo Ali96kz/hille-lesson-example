@@ -6,17 +6,15 @@ import com.hillel.car.shop.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShowProfileController implements Controller{
-    private UserService userService;
+public class ShowProfileController implements Controller {
+    private UserService userService = new UserService();
 
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
-        Integer userId =(Integer) req.getSession().getAttribute("userId");
-        User user = null;
+        Integer userId = (Integer) req.getSession().getAttribute("userId");
+        User user = userService.findById(userId);
 
-        req.setAttribute("username", user.getName());
-        req.setAttribute("password", user.getPassword());
-
-        return new ControllerResultDto("profile");
+        req.setAttribute("client", user);
+        return new ControllerResultDto("profile", false);
     }
 }

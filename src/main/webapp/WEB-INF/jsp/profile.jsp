@@ -1,17 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--@elvariable id="user" type="com.hillel.car.shop.entity.User"--%>
+<%--@elvariable id="client" type="com.hillel.car.shop.entity.User"--%>
 <html>
 <head>
     <title>Profile </title>
 </head>
 <body>
-<p>Id : ${user.id}</p>
-<p>Name : ${user.name}</p>
-<p>Password : ${user.password}</p>
-
-<a href="cars">view all cars</a>
-<a href="basket">view my basket</a>
-
+<p>Id : ${client.id} </p>
+<p>Name : ${client.name}</p>
+<p>Password : ${client.password}</p>
 </body>
 </html>

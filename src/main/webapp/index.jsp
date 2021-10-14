@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flower Shop</title>
+    <title>Car Shop</title>
 </head>
 <body>
 <c:redirect url="/car-shop/login"/>

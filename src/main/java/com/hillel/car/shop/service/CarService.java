@@ -2,6 +2,7 @@ package com.hillel.car.shop.service;
 
 import java.util.List;
 
+import com.hillel.car.shop.ConnectionPool;
 import com.hillel.car.shop.dao.CarDaoImpl;
 import com.hillel.car.shop.dao.DaoException;
 import com.hillel.car.shop.entity.Car;
@@ -9,6 +10,7 @@ import com.hillel.car.shop.entity.Car;
 public class CarService {
 
     private CarDao carDao;
+    private ConnectionPool connectionPool ;
 
     public CarService(CarDao carDao) {
         this.carDao = carDao;

@@ -5,10 +5,12 @@ import com.hillel.car.shop.entity.User;
 import com.hillel.car.shop.service.BasketService;
 import com.hillel.car.shop.service.ServiceException;
 import com.hillel.car.shop.service.UserService;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@org.springframework.stereotype.Controller
 public class ShowBasketController implements Controller {
 
     private UserService userService = new UserService();
